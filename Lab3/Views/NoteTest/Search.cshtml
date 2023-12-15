@@ -1,0 +1,56 @@
+﻿@model Lab3.Models.ViewModelPA
+@{
+    ViewData["Title"] = "Sort";
+    int i = 0;
+    if (ViewData["user"] != null) { i = (int)ViewData["user"]; }
+}
+<h1>Filter Notes</h1>
+
+<p>Potential Error: @ViewBag.error</p>
+
+
+<form asp-action="Filter" method="post">
+    <label>Select User:</label>
+    <select class="form-control" id="user" name="user">
+        @foreach (var od in Model.OwnerDetailList)
+        {
+            @if (od.Owner != i)
+            {
+                <option value="@od.Owner">@od.User</option>
+            }
+            else
+            {
+                <option value="@od.Owner" Selected>@od.User</option>
+
+            }
+        }
+    </select>
+    <button type="submit" value="Filter" class="btn">Filter</button>
+</form>
+
+<form asp-action="Search" method="get">
+    <input type="text" name="searchStr" placeholder="search..." />
+    <button type="submit" value="Search" class="btn">Search</button>
+</form>
+
+<h3>All Notes</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th><a asp-action="Sort" asp-route-sortVar="@ViewData["title"]">Title</a></th>
+            <th><a asp-action="Sort" asp-route-sortVar="@ViewData["content"]">Content</a></th>
+            <th><a asp-action="Sort" asp-route-sortVar="@ViewData["owner"]">Owner</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var nd in Model.NoteDetailList)
+        {
+            <tr>
+                <td>@nd.Title</td>
+                <td>@nd.Content</td>
+                <td>@nd.Owner</td>
+            </tr>
+        }
+    </tbody>
+</table>

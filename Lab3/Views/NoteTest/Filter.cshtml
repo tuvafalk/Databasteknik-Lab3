@@ -1,0 +1,164 @@
+﻿@model Lab3.Models.ViewModelPA
+@{
+    ViewData["Title"] = "Filter";
+    int i = 0;
+    if (ViewData["user"] != null) { i = (int)ViewData["user"]; }
+}
+<h1>Filter Notes</h1>
+
+<p>Potential Error: @ViewBag.error</p>
+
+
+<form asp-action="Filter" method="post">
+    <label>Select User:</label>
+    <select class="form-control" id="user" name="user">
+        @foreach (var od in Model.OwnerDetailList)
+        {
+            @if (od.Owner != i)
+            {
+                <option value="@od.Owner">@od.User</option>
+            }
+            else
+            {
+                <option value="@od.Owner" Selected>@od.User</option>
+
+            }
+        }
+    </select>
+    <button type="submit" value="Filter" class="btn">Filter</button>
+</form>
+
+@{
+    List<OwnerDetail> userList = (List<OwnerDetail>)ViewData["ownerList"];
+}
+
+<p>The sent value from the dropdown list is: @ViewData["user"]</p>
+
+<h3>All Notes</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Owner</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var nd in Model.NoteDetailList)
+        {
+            <tr>
+                <td>@nd.Title</td>
+                <td>@nd.Content</td>
+                <td>@nd.Owner</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Users</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Id</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var od in Model.OwnerDetailList)
+        {
+            <tr>
+                <td>@od.User</td>
+                <td>@od.Owner</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@*<p><b>Users - view data</b></p>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Lab3.Models.OwnerDetail od in userList)
+            {
+                <tr>
+                    <td>@od.User</td>
+                    <td>@od.Owner</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p><b>Users - view bag</b></p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Lab3.Models.OwnerDetail od in (List<OwnerDetail>)ViewBag.ownerList)
+            {
+                <tr>
+                    <td>@od.User</td>
+                    <td>@od.Owner</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Colaboration details</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Owner</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var colabDetail in Model.ColabList)
+            {
+                <tr>
+                    <td>@colabDetail.Title</td>
+                    <td>@colabDetail.User</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+    <h3>Notes With Colaborations</h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>NoteID</th>
+                    <th>Title</th>
+                    <th>Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var colabDetail in Model.ColabList)
+                {
+                    <tr>
+                        <td>@colabDetail.NoteID</td>
+                        <td>@colabDetail.Title</td>
+                        <td>@colabDetail.User</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+*@
